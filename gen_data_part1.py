@@ -13,6 +13,6 @@ num_samples = 10000
 training_data = np.zeros([num_samples, num_messages])
 
 for iter in range(10000):
-    training_data[iter, np.randint(4)] = 1
+    training_data[iter, np.random.randint(4)] = 1
 
 print(training_data)
