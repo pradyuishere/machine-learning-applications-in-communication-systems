@@ -17,11 +17,11 @@ file_train.close()
 file_test.close()
 ###############################################################################
 learning_rate = 0.01
-input_dim = 8
+input_dim = 4
 encoding_dim = 2
 midlayer_dim = int((input_dim+encoding_dim)/2) +1
 print ("midlayer_dim :", midlayer_dim )
-energy_per_bit = 10
+energy_per_bit = 100
 
 input_msg = Input(shape = (input_dim, ))
 
