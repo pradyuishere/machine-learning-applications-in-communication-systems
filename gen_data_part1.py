@@ -15,9 +15,6 @@ file = open("training_data.npy", 'w')
 
 for iter in range(10000):
     training_data[iter, np.random.randint(4)] = 1
-<<<<<<< HEAD
-=======
 
 np.save(file, training_data)
 print(training_data)
->>>>>>> 33854346a7992c3a6094a94c30cd289e4bfc4cc9
