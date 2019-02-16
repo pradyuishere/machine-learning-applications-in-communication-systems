@@ -13,7 +13,7 @@ training_data = np.load(file_train)
 test_data = np.load(file_test)
 
 file_train.close()
-file_test.clost()
+file_test.close()
 ###############################################################################
 learning_rate = 0.1
 input_dim = 4
