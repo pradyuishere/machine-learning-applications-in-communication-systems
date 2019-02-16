@@ -14,7 +14,7 @@ training_data = np.zeros([num_samples, num_messages])
 file = open("training_data.npy", 'w')
 
 for iter in range(num_samples):
-    training_data[iter, int(num_samples/(int(num_samples/num_messages))+1)] = 1
+    training_data[iter, int(iter/(int((num_samples+1)/num_messages)))] = 1
 
 np.save(file, training_data)
 print(training_data)
@@ -27,7 +27,7 @@ test_data = np.zeros([num_samples, num_messages])
 file = open("test_data.npy", 'w')
 
 for iter in range(num_samples):
-    test_data[iter, int(num_samples/int(num_samples/num_messages))] = 1
+    test_data[iter, np.random.randint(num_messages)] = 1
 
 np.save(file, test_data)
 print(test_data)
