@@ -20,6 +20,7 @@ learning_rate = 0.01
 input_dim = 4
 encoding_dim = 2
 midlayer_dim = int((input_dim+encoding_dim)/2) +1
+print ("midlayer_dim :", midlayer_dim )
 
 energy_per_bit = 10
 
@@ -29,7 +30,7 @@ encoded = Dense(midlayer_dim, activation='relu')(input_msg)
 encoded2 = Dense(encoding_dim, activation = 'linear')(encoded)
 ##encoded3 = keras.activations.softmax(encoded2, axis = 0)
 encoded3 = keras.layers.Lambda(lambda x: keras.backend.l2_normalize(x, axis=0))(encoded2)
-encoded4 = keras.layers.GaussianNoise(np.sqrt(encoding_dim/(input_dim*energy_per_bit)))(encoded3)
+encoded4 = keras.layers.GaussianNoise(np.sqrt(encoding_dim/(2*input_dim*energy_per_bit)))(encoded3)
 
 decoded3 = Dense(midlayer_dim, activation = 'relu')(encoded4)
 decoded2 = Dense(input_dim, activation = 'relu')(decoded3)
