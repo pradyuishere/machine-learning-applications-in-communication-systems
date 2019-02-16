@@ -17,28 +17,28 @@ file_train.close()
 file_test.close()
 ###############################################################################
 learning_rate = 0.01
-input_dim = 4
+input_dim = 16
 encoding_dim = 2
 midlayer_dim = int((input_dim+encoding_dim)/2) +1
 print ("midlayer_dim :", midlayer_dim )
-energy_per_bit = 100
+energy_per_bit = 5
 
 input_msg = Input(shape = (input_dim, ))
 
 encoded = Dense(input_dim, activation='relu')(input_msg)
 encoded2 = Dense(encoding_dim, activation = 'linear')(encoded)
 encoded3 = keras.layers.Lambda(lambda x: keras.backend.l2_normalize(x, axis=0))(encoded2)
-encoded3 = keras.layers.Lambda(lambda x:np.sqrt(encoding_dim)*keras.backend.l2_normalize(x, axis=0))(encoded2)
+encoded3 = keras.layers.Lambda(lambda x:np.sqrt(encoding_dim)*keras.backend.l2_normalize(x, axis=1))(encoded2)
 encoded4 = keras.layers.GaussianNoise(np.sqrt(encoding_dim/(2*input_dim*energy_per_bit)))(encoded3)
 
 decoded3 = Dense(midlayer_dim, activation = 'relu')(encoded4)
 decoded  = Dense(input_dim, activation = "softmax") (decoded3)
 
-adam = Adam(0.01)
-sgd = SGD(0.01)
+adam = Adam(learning_rate)
+sgd = SGD(learning_rate)
 
 autoencoder = Model(input_msg, decoded)
-autoencoder.compile(optimizer = adam, loss='categorical_crossentropy')
+autoencoder.compile(optimizer = sgd, loss='categorical_crossentropy')
 
 ###############################################################################
 ##Preparing the encoder and the decoder
