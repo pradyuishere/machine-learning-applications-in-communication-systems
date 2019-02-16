@@ -14,7 +14,7 @@ training_data = np.zeros([num_samples, num_messages])
 file = open("training_data.npy", 'w')
 
 for iter in range(num_samples):
-    training_data[iter, int(num_samples/int(num_samples/num_messages))] = 1
+    training_data[iter, int(num_samples/(int(num_samples/num_messages))+1)] = 1
 
 np.save(file, training_data)
 print(training_data)
