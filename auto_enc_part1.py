@@ -21,26 +21,17 @@ input_dim = 8
 encoding_dim = 2
 midlayer_dim = int((input_dim+encoding_dim)/2) +1
 print ("midlayer_dim :", midlayer_dim )
-<<<<<<< HEAD
-
-=======
->>>>>>> 2577a5f8555772dac3b8401a9f3af42d48657761
 energy_per_bit = 10
 
 input_msg = Input(shape = (input_dim, ))
 
 encoded = Dense(input_dim, activation='relu')(input_msg)
 encoded2 = Dense(encoding_dim, activation = 'linear')(encoded)
-##encoded3 = keras.activations.softmax(encoded2, axis = 0)
-<<<<<<< HEAD
 encoded3 = keras.layers.Lambda(lambda x: keras.backend.l2_normalize(x, axis=0))(encoded2)
-=======
 encoded3 = keras.layers.Lambda(lambda x:np.sqrt(encoding_dim)*keras.backend.l2_normalize(x, axis=0))(encoded2)
->>>>>>> 2577a5f8555772dac3b8401a9f3af42d48657761
 encoded4 = keras.layers.GaussianNoise(np.sqrt(encoding_dim/(2*input_dim*energy_per_bit)))(encoded3)
 
 decoded3 = Dense(midlayer_dim, activation = 'relu')(encoded4)
-##decoded2 = Dense(input_dim, activation = 'relu')(decoded3)
 decoded  = Dense(input_dim, activation = "softmax") (decoded3)
 
 adam = Adam(0.01)
