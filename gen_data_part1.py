@@ -4,11 +4,11 @@ import numpy as np
 ##Defining the necessities
 #Defining (n, k)
 num_channels = 2
-num_messages = 4
+num_messages = 8
 num_bits = 2
 ###############################################################################
 ##Generating the training data, one hot vectors of width num_messages
-num_samples = 10000
+num_samples = 50000
 training_data = np.zeros([num_samples, num_messages])
 
 file = open("training_data.npy", 'w')
@@ -21,7 +21,7 @@ print(training_data)
 file.close()
 ###############################################################################
 ##Generating the test data, one hot vectors of width num_messages
-num_samples = 2000
+num_samples = 5000
 test_data = np.zeros([num_samples, num_messages])
 
 file = open("test_data.npy", 'w')

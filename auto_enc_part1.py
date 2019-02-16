@@ -17,23 +17,23 @@ file_train.close()
 file_test.close()
 ###############################################################################
 learning_rate = 0.01
-input_dim = 4
+input_dim = 8
 encoding_dim = 2
 midlayer_dim = int((input_dim+encoding_dim)/2) +1
-
+print ("midlayer_dim :", midlayer_dim )
 energy_per_bit = 10
 
 input_msg = Input(shape = (input_dim, ))
 
-encoded = Dense(midlayer_dim, activation='relu')(input_msg)
+encoded = Dense(input_dim, activation='relu')(input_msg)
 encoded2 = Dense(encoding_dim, activation = 'linear')(encoded)
 ##encoded3 = keras.activations.softmax(encoded2, axis = 0)
-encoded3 = keras.layers.Lambda(lambda x: keras.backend.l2_normalize(x, axis=0))(encoded2)
-encoded4 = keras.layers.GaussianNoise(np.sqrt(encoding_dim/(input_dim*energy_per_bit)))(encoded3)
+encoded3 = keras.layers.Lambda(lambda x:np.sqrt(encoding_dim)*keras.backend.l2_normalize(x, axis=0))(encoded2)
+encoded4 = keras.layers.GaussianNoise(np.sqrt(encoding_dim/(2*input_dim*energy_per_bit)))(encoded3)
 
 decoded3 = Dense(midlayer_dim, activation = 'relu')(encoded4)
-decoded2 = Dense(input_dim, activation = 'relu')(decoded3)
-decoded  = Dense(input_dim, activation = "softmax") (decoded2)
+##decoded2 = Dense(input_dim, activation = 'relu')(decoded3)
+decoded  = Dense(input_dim, activation = "softmax") (decoded3)
 
 adam = Adam(0.01)
 sgd = SGD(0.01)
@@ -46,14 +46,14 @@ autoencoder.compile(optimizer = adam, loss='categorical_crossentropy')
 encoder = Model(input_msg, encoded3)
 
 encoded_input = Input(shape=(encoding_dim, ))
-decoder_layer1 = autoencoder.layers[-3](encoded_input)
-decoder_layer2 = autoencoder.layers[-2](decoder_layer1)
-decoder_layer3 = autoencoder.layers[-1](decoder_layer2)
+decoder_layer1 = autoencoder.layers[-2](encoded_input)
+decoder_layer2 = autoencoder.layers[-1](decoder_layer1)
+#decoder_layer3 = autoencoder.layers[-1](decoder_layer2)
 
-decoder = Model(encoded_input, decoder_layer3)
+decoder = Model(encoded_input, decoder_layer2)
 ###############################################################################
 
-autoencoder.fit(training_data, training_data, epochs=100, batch_size=50, shuffle=True, validation_data=(test_data, test_data))
+autoencoder.fit(training_data, training_data, epochs=50, batch_size=50, shuffle=True, validation_data=(test_data, test_data))
 ###############################################################################
 test_predictions = encoder.predict(test_data)
 
