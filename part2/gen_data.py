@@ -6,7 +6,7 @@ import numpy as np
 num_channels = 2
 num_messages = 4
 num_bits = 2
-###############################################################################
+################################################################################
 ##Generating the training data, one hot vectors of width num_messages
 num_samples = 10000
 training_data = np.zeros([num_samples, num_messages])
