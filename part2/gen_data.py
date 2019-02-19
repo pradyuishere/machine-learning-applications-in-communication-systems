@@ -11,8 +11,8 @@ num_bits = 2
 num_samples = 10000
 training_data = np.zeros([num_samples, num_messages])
 
-file = open("training_data-a.npy", 'w')
-file1 = open("training_data-b.npy", 'w')
+file = open("training_data-a.npy", 'wb')
+file1 = open("training_data-b.npy", 'wb')
 
 for iter in range(num_samples):
 
@@ -34,8 +34,8 @@ file1.close()
 num_samples = 5000
 test_data = np.zeros([num_samples, num_messages])
 
-file = open("test_data-a.npy", 'w')
-file1 = open("test_data-b.npy", 'w')
+file = open("test_data-a.npy", 'wb')
+file1 = open("test_data-b.npy", 'wb')
 
 for iter in range(num_samples):
     test_data[iter, np.random.randint(num_messages)] = 1
